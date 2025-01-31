@@ -122,12 +122,18 @@ const keys = {
   w:false,
   s:false
 };
-
+let gameRunning = false;
 document.addEventListener("keydown", function (event) {
   if (event.key in keys) {
     keys[event.key] = true;
     event.preventDefault();
     console.log(event.key)
+  }
+  if (event.key === " " && !gameRunning) {
+    gameRunning = true;
+    gameLoop();
+    const heading = document.getElementById("hiddenHeading3");
+        heading.style.display = "none";
   }
 });
 
@@ -145,27 +151,36 @@ function gameLoop() {
         heading2.style.display = "block";
         return 1;
     }
+
   resetBall();
   drawBall();
-
+  
   if (keys.w) {
     resetLeft();
-    leftSlider.y -= 3;
+    if (leftSlider.y >= -3){
+      leftSlider.y -= 3;
+    }
     drawLeft();
   }
   if (keys.s) {
     resetLeft();
-    leftSlider.y += 3;
+    if (leftSlider.y <= canvas.height-100){
+      leftSlider.y += 3;
+    }
     drawLeft();
   }
   if (keys.ArrowUp) {
     resetRight();
-    rightSlider.y -= 3;
+    if (rightSlider.y >= -3){
+      rightSlider.y -= 3;
+    }
     drawRight();
   }
   if (keys.ArrowDown) {
     resetRight();
-    rightSlider.y += 3;
+    if (rightSlider.y <= canvas.height-100){
+      rightSlider.y += 3;
+    }
     drawRight();
   }
   
@@ -177,4 +192,6 @@ drawLeft();
 drawRight();
 drawBall();
 
-gameLoop();
+
+// gameLoop();
+
